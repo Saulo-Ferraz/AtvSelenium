@@ -7,7 +7,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class jUnit {
 
@@ -32,6 +34,33 @@ public class jUnit {
         WebElement selectedLink = driver.findElement(By.cssSelector(".bg-global-nav-secondary-item.header"));
 
         assertEquals("Social", selectedLink.getText());
+    }
+
+    @Test
+    public void testAcessaAbaHistoryEVerificaNavegacaoParaMainPage() {
+        driver.get("https://bulbapedia.bulbagarden.net/wiki/Main_Page");
+
+        WebElement elementoHistory = driver.findElement(By.id("ca-history"));
+        elementoHistory.click();
+
+        WebElement elementoLI = driver.findElement(By.id("n-mainpage"));
+        String textoDoLI = elementoLI.getText();
+        
+        assertEquals("Main Page", textoDoLI);
+    }
+
+    @Test
+    public void testValidaAbaDiscordComLinkCorreto() {
+        driver.get("https://bulbapedia.bulbagarden.net/wiki/Main_Page");
+
+        WebElement elementoDiscord = driver.findElement(By.cssSelector("ul.bg-global-nav-primary > li:nth-child(4)"));
+        String textoDiscord = elementoDiscord.getText();
+
+        WebElement elementoLinkDiscord = driver.findElement(By.cssSelector("ul.bg-global-nav-primary > li:nth-child(4) a"));
+        String valorHref = elementoLinkDiscord.getAttribute("href");
+        
+        assertEquals("Discord", textoDiscord);
+        assertTrue(valorHref.contains("https://discord.gg"));
     }
 
     @AfterEach
