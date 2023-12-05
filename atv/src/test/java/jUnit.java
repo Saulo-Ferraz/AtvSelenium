@@ -1,3 +1,5 @@
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,10 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
-
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class jUnit {
 
@@ -45,7 +43,7 @@ public class jUnit {
 
         WebElement elementoLI = driver.findElement(By.id("n-mainpage"));
         String textoDoLI = elementoLI.getText();
-        
+
         assertEquals("Main Page", textoDoLI);
     }
 
@@ -56,9 +54,10 @@ public class jUnit {
         WebElement elementoDiscord = driver.findElement(By.cssSelector("ul.bg-global-nav-primary > li:nth-child(4)"));
         String textoDiscord = elementoDiscord.getText();
 
-        WebElement elementoLinkDiscord = driver.findElement(By.cssSelector("ul.bg-global-nav-primary > li:nth-child(4) a"));
+        WebElement elementoLinkDiscord = driver
+                .findElement(By.cssSelector("ul.bg-global-nav-primary > li:nth-child(4) a"));
         String valorHref = elementoLinkDiscord.getAttribute("href");
-        
+
         assertEquals("Discord", textoDiscord);
         assertTrue(valorHref.contains("https://discord.gg"));
     }
@@ -66,5 +65,13 @@ public class jUnit {
     @AfterEach
     public void tearDown() {
         driver.quit();
+    }
+
+    @Test
+    public void testBotaoLoginNaoPresente() {
+        driver.get("https://bulbapedia.bulbagarden.net/wiki/Main_Page");
+
+        assertFalse(driver.findElements(By.id("botao-login")).size() > 0,
+                "O botão de login não deve estar presente na página");
     }
 }
