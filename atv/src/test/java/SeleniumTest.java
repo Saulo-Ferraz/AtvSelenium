@@ -5,7 +5,6 @@ import org.junit.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.Select;
 
 public class SeleniumTest {
     
@@ -94,14 +93,4 @@ public class SeleniumTest {
 		driver.quit();
 	}
 
-	@Test
-	public void test06() {
-		System.setProperty("webdriver.chrome.driver", "src/driver/chromedriver.exe");
-
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("https://bulbapedia.bulbagarden.net/wiki/Main_Page");
-
-		
-	}
 }

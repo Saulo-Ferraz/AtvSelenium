@@ -4,10 +4,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
+
 
 public class jUnit {
 
@@ -73,5 +75,20 @@ public class jUnit {
 
         assertFalse(driver.findElements(By.id("botao-login")).size() > 0,
                 "O botão de login não deve estar presente na página");
+    }
+
+    @Test
+    public void testRedirecionarAoSelecionarIdiomaEspanhol() {
+        driver.get("https://bulbapedia.bulbagarden.net/wiki/Main_Page");
+        WebElement redicionarParaEspanhol = driver.findElement(By.xpath("//td[contains(text(), 'Spanish') and .//a[@class='extiw']]"));
+        WebElement elementoLinkEspanhol =  redicionarParaEspanhol.findElement(By.xpath(".//a[@class='extiw']"));
+        String urlEspanhol = elementoLinkEspanhol.getAttribute("href");
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", elementoLinkEspanhol);
+        elementoLinkEspanhol.click();
+        String tituloPaginaAtual = driver.getTitle();
+
+        assertEquals(urlEspanhol, "https://www.wikidex.net/wiki/WikiDex");
+        assertEquals(tituloPaginaAtual, "WikiDex, la enciclopedia Pokémon");
     }
 }
